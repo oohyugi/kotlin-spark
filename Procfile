@@ -1,0 +1,1 @@
+web: java -jar build/libs/kotlin-kotlin-spark-1.0.jar
