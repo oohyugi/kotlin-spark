@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.db.MysqlDatabaseType
+import com.j256.ormlite.db.PostgresDatabaseType
 import com.j256.ormlite.jdbc.JdbcConnectionSource
 import kotlin.String
 import java.security.NoSuchAlgorithmException
@@ -53,8 +54,9 @@ fun String.stringToMD5(s: String): String {
 
 fun Boolean.getToken(s: String): Boolean {
     //database type
-    val databaseType = MysqlDatabaseType()
+    val databaseType = PostgresDatabaseType()
     //connect to database
+//    val connectionSource = JdbcConnectionSource("jdbc:mysql://localhost:5432/kajian", "postgres", "kutang", databaseType)
     val connectionSource = JdbcConnectionSource("jdbc:postgresql://ec2-54-227-252-202.compute-1.amazonaws.com:5432/d879hf7441jppf", databaseType)
     connectionSource.setUsername("tzzjqsampsxhgx")
     connectionSource.setPassword("41f9cb24177a90ef15d4849da74c50453d1a29b6901be2dcc1794cb7cd3d0768")

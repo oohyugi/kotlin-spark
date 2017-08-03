@@ -24,6 +24,7 @@ class Router {
         val userDao = UserDb()
         //connect to database
 
+//        val connectionSource = JdbcConnectionSource("jdbc:mysql://localhost:5432/kajian", "postgres", "kutang", databaseType)
         val connectionSource = JdbcConnectionSource("jdbc:postgresql://ec2-54-227-252-202.compute-1.amazonaws.com:5432/d879hf7441jppf", databaseType)
             connectionSource.setUsername("tzzjqsampsxhgx")
         connectionSource.setPassword("41f9cb24177a90ef15d4849da74c50453d1a29b6901be2dcc1794cb7cd3d0768")
