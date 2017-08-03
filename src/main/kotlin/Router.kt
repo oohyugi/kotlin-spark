@@ -3,6 +3,7 @@ import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.dao.DaoManager
 import spark.Spark.*
 import com.j256.ormlite.db.MysqlDatabaseType
+import com.j256.ormlite.db.PostgresDatabaseType
 import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.j256.ormlite.table.TableUtils
 import news.NewsDb
@@ -17,12 +18,12 @@ class Router {
     fun run() {
 
         //database type
-        val databaseType = MysqlDatabaseType()
+        val databaseType = PostgresDatabaseType()
 
 
         val userDao = UserDb()
         //connect to database
-        val connectionSource = JdbcConnectionSource("jdbc:mysql://localhost:3306/kajian", "root", "", databaseType)
+        val connectionSource = JdbcConnectionSource("jdbc:postgresql://localhost:5432/kajian", "postgres", "kutang", databaseType)
         val dao = DaoManager.createDao(connectionSource, NewsDb::class.java) as Dao<NewsDb, String>
         // create table
         TableUtils.createTableIfNotExists(connectionSource, NewsDb::class.java)
