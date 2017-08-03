@@ -23,7 +23,7 @@ class Router {
 
         val userDao = UserDb()
         //connect to database
-        val connectionSource = JdbcConnectionSource("jdbc:postgresql://localhost:5432/kajian", "postgres", "kutang", databaseType)
+        val connectionSource = JdbcConnectionSource("jdbc:postgresql://ec2-54-227-252-202.compute-1.amazonaws.com:5432/d879hf7441jppf", "tzzjqsampsxhgx", "41f9cb24177a90ef15d4849da74c50453d1a29b6901be2dcc1794cb7cd3d0768", databaseType)
         val dao = DaoManager.createDao(connectionSource, NewsDb::class.java) as Dao<NewsDb, String>
         // create table
         TableUtils.createTableIfNotExists(connectionSource, NewsDb::class.java)
