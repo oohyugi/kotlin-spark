@@ -28,12 +28,19 @@ class Router {
             connectionSource.setUsername("tzzjqsampsxhgx")
         connectionSource.setPassword("41f9cb24177a90ef15d4849da74c50453d1a29b6901be2dcc1794cb7cd3d0768")
         val dao = DaoManager.createDao(connectionSource, NewsDb::class.java) as Dao<NewsDb, String>
-        // create table
-        TableUtils.createTableIfNotExists(connectionSource, NewsDb::class.java)
-
         val daoUser = DaoManager.createDao(connectionSource, UserDb::class.java) as Dao<UserDb, kotlin.String>
         // create table
-        TableUtils.createTableIfNotExists(connectionSource, UserDb::class.java)
+
+       if (!dao.isTableExists){
+           TableUtils.createTableIfNotExists(connectionSource, NewsDb::class.java)
+       }
+        if (!daoUser.isTableExists){
+            // create table
+            TableUtils.createTableIfNotExists(connectionSource, UserDb::class.java)
+        }
+
+
+
 
 
         notFound { req, res ->
