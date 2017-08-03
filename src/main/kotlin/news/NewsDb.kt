@@ -17,6 +17,25 @@ data class NewsDb (
     @DatabaseField
     var description: String = "",
 
+    @DatabaseField()
+    var waktu: String = "",
+
+    @DatabaseField
+    var img_url: String = "",
+
+    @DatabaseField
+    var pemeteri: String = "",
+
+    @DatabaseField
+    var img_pemateri_url: String = "",
+
+    @DatabaseField
+    var tempat: String = "",
+
+    @DatabaseField
+    var cp: String = "",
+
+
     @DatabaseField
     var timestamp: Date = Date()
 )

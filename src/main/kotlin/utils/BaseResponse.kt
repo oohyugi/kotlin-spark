@@ -6,10 +6,8 @@ import spark.Response
 //Extention manupulasi / menambah satu method pad response yaitu baseResponse
 fun Response.baseResponse(code : Int,message :String,data: Any) : String {
     this.header("content-type","application/json")
-    val baseResponse  = HashMap<String,Any>()
-    baseResponse.put("status",code)
-    baseResponse.put("message", message)
-    baseResponse.put("data",data)
-
-    return jacksonObjectMapper().writeValueAsString(baseResponse)
+    val mData = BaseResponse(code,message,data)
+    return jacksonObjectMapper().writeValueAsString(mData)
 }
+
+data class BaseResponse(val code : Int, val message :String, val data: Any)

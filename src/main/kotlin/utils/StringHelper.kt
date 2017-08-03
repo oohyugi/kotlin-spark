@@ -6,15 +6,13 @@ import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.db.MysqlDatabaseType
 import com.j256.ormlite.jdbc.JdbcConnectionSource
-import com.j256.ormlite.table.TableUtils
-import java.util.HashMap
 import kotlin.String
 import java.security.NoSuchAlgorithmException
-import org.eclipse.jetty.util.security.Credential.MD5.digest
-import com.oracle.util.Checksums.update
-import news.NewsDb
+import io.jsonwebtoken.CompressionCodecs
 import user.UserDb
-import java.security.MessageDigest
+import io.jsonwebtoken.Jwts
+import java.util.*
+import io.jsonwebtoken.SignatureAlgorithm
 
 
 fun String.jsonToMap(): HashMap<String, Any> {
@@ -59,8 +57,34 @@ fun Boolean.getToken(s: String): Boolean {
     //connect to database
     val connectionSource = JdbcConnectionSource("jdbc:mysql://localhost:3306/kajian", "root", "", databaseType)
     val daoUser = DaoManager.createDao(connectionSource, UserDb::class.java) as Dao<UserDb, String>
-    var validToken: Boolean = true
+    var validToken: Boolean
+    val queryBuilder = daoUser.queryBuilder()
+    queryBuilder.where().eq("token", s)
+    val userByToken = daoUser.query(queryBuilder.prepare())
+    validToken = userByToken.isNotEmpty()
+//    for (i in allUsers.indices) {
+//        validToken = allUsers[i].token == s
+//        if (validToken) {
+//            break
+//        }
+//
+////        println(userToken)
+////        println("input user$s" )
+//
+//    }
+    println(validToken)
+
+    return validToken
+}
+fun Boolean.getTokenBoll(s: String): Boolean {
+    //database type
+    val databaseType = MysqlDatabaseType()
+    //connect to database
+    val connectionSource = JdbcConnectionSource("jdbc:mysql://localhost:3306/kajian", "root", "", databaseType)
+    val daoUser = DaoManager.createDao(connectionSource, UserDb::class.java) as Dao<UserDb, String>
+    var validToken: Boolean
     val allUsers = daoUser.queryForAll()
+    validToken = allUsers.isNotEmpty()
     for (i in allUsers.indices) {
         validToken = allUsers[i].token == s
         if (validToken) {
@@ -74,5 +98,18 @@ fun Boolean.getToken(s: String): Boolean {
     println(validToken)
 
     return validToken
+}
+
+
+//Create token
+ fun String.createToken(subject:String,key :String): String {
+    val compactJws = Jwts.builder()
+            .setSubject(subject)
+            .compressWith(CompressionCodecs.DEFLATE)
+            .signWith(SignatureAlgorithm.HS512, key)
+            .compact()
+
+
+   return compactJws
 }
 

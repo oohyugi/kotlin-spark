@@ -16,6 +16,15 @@ data class UserDb(
         var email: String = "",
 
         @DatabaseField(canBeNull = false)
+        var password: String = "",
+
+        @DatabaseField(canBeNull = false)
+        var telpon: String = "",
+
+        @DatabaseField(canBeNull = false)
+        var url_picture: String = "",
+
+        @DatabaseField(canBeNull = false)
         var token : String ="",
 
         @DatabaseField
